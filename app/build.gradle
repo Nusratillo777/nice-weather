@@ -16,24 +16,35 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'API_KEY', API_KEY
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //support
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation "com.android.support:appcompat-v7:$support"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     //dagger
     implementation "com.google.dagger:dagger:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
 
+
     //network
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
-    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttp"
     implementation "com.squareup.okhttp3:okhttp:$okHttp"
+    implementation "com.squareup.picasso:picasso:$picasso"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0"
 
     //butterknife
     implementation "com.jakewharton:butterknife:$butterknife"
@@ -42,6 +53,9 @@ dependencies {
     //rxjava
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rxbinding"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4:$rxbinding"
+
 
     //test
     testImplementation 'junit:junit:4.12'
