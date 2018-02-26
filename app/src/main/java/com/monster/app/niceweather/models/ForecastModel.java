@@ -7,6 +7,15 @@ import java.util.List;
  */
 
 public class ForecastModel {
-    public ForecastCityModel.TempModel temp;
+    public TempModel temp;
     public List<ForecastCityModel.WeatherModel> weather;
+
+    public static class TempModel {
+        public double day;
+        public double min;
+        public double max;
+        public double night;
+        public double eve;
+        public double morn;
+    }
 }

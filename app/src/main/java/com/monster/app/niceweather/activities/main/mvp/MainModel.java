@@ -3,6 +3,7 @@ package com.monster.app.niceweather.activities.main.mvp;
 import android.app.Activity;
 import android.widget.Toast;
 
+import com.monster.app.niceweather.activities.detail.DetailActivity;
 import com.monster.app.niceweather.models.ForecastCityModel;
 import com.monster.app.niceweather.models.ListResultResponse;
 import com.monster.app.niceweather.network.OpenweatherService;
@@ -29,8 +30,8 @@ public class MainModel {
         return service.getCitiesForecast(BBOX);
     }
 
-    public void startDetailActivity(int cityId) {
-        Toast.makeText(activity, "" + cityId, Toast.LENGTH_SHORT).show();
+    public void startDetailActivity(ForecastCityModel city) {
+        DetailActivity.start(activity, city);
     }
 
 }

@@ -18,7 +18,7 @@ public interface MainView {
 
     Observable<Object> observeRefresh();
 
-    Observable<Integer> observeItemClick();
+    Observable<ForecastCityModel> observeItemClick();
 
     void setLoading(boolean loading);
 

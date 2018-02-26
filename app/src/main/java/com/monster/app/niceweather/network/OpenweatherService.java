@@ -31,6 +31,6 @@ public interface OpenweatherService {
      * @param cnt count of days
      * @return list of forecasts for given city
      */
-    @GET("forecast/daily")
+    @GET("forecast/daily?units=metric")
     Observable<ListResultResponse<ForecastModel>> getForecast(@Query("id") int id, @Query("cnt") int cnt);
 }

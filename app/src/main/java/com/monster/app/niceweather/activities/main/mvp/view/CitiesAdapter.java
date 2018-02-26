@@ -4,34 +4,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.monster.app.niceweather.base.BaseForecastAdapter;
 import com.monster.app.niceweather.models.ForecastCityModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitiesAdapter extends BaseAdapter {
+public class CitiesAdapter extends BaseForecastAdapter<ForecastCityModel> {
 
     private Picasso picasso;
-    private final List<ForecastCityModel> forecastList = new ArrayList<>(0);
-
     public CitiesAdapter(Picasso picasso) {
         this.picasso = picasso;
-    }
-
-    @Override
-    public int getCount() {
-        return forecastList.size();
-    }
-
-    @Override
-    public ForecastCityModel getItem(int position) {
-        return forecastList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return forecastList.get(position).id;
     }
 
     @Override
@@ -45,13 +29,5 @@ public class CitiesAdapter extends BaseAdapter {
         }
         listItem.bindView(forecastList.get(position));
         return listItem;
-    }
-
-    public void swapData(List<ForecastCityModel> repoList) {
-        this.forecastList.clear();
-        if (repoList != null && !repoList.isEmpty()) {
-            this.forecastList.addAll(repoList);
-        }
-        notifyDataSetChanged();
     }
 }

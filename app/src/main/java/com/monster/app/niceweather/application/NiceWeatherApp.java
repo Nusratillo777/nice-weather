@@ -13,8 +13,6 @@ import com.squareup.picasso.Picasso;
 
 public class NiceWeatherApp extends Application{
 
-    private OpenweatherService openweatherService;
-    Picasso picasso;
     NiceWeatherAppComponent appComponent;
 
     public static NiceWeatherApp get(Activity activity) {
@@ -31,7 +29,5 @@ public class NiceWeatherApp extends Application{
         appComponent = DaggerNiceWeatherAppComponent.builder()
                 .contextModule(new ContextModule(this))
                 .build();
-        openweatherService = appComponent.getOpenweatherService();
-        picasso = appComponent.getPicasso();
     }
 }

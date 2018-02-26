@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.monster.app.niceweather.activities.main.dagger.DaggerMainComponent;
-import com.monster.app.niceweather.activities.main.dagger.MainComponent;
 import com.monster.app.niceweather.activities.main.dagger.MainModule;
 import com.monster.app.niceweather.activities.main.mvp.MainPresenter;
 import com.monster.app.niceweather.activities.main.mvp.view.MainView;
@@ -34,9 +33,8 @@ public class MainActivity extends AppCompatActivity {
                 .niceWeatherAppComponent(NiceWeatherApp.get(this).component())
                 .mainModule(new MainModule(this))
                 .build().inject(this);
-
-        setContentView(view.getView());
         mainPresenter.onCreate();
+        setContentView(view.getView());
     }
 
     @Override
