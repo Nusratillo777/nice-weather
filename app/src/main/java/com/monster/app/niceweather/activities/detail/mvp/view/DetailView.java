@@ -26,4 +26,6 @@ public interface DetailView {
 
     void setTitle(String title);
 
+    void showError();
+
 }

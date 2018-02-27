@@ -24,4 +24,6 @@ public interface MainView {
 
     void setForecastCityItems(List<ForecastCityModel> items);
 
+    void showError();
+
 }

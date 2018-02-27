@@ -5,6 +5,7 @@ import com.monster.app.niceweather.models.ForecastModel;
 import com.monster.app.niceweather.models.ListResultResponse;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -23,7 +24,7 @@ public interface OpenweatherService {
      * @return list of cities with current weather forecast
      */
     @GET("box/city")
-    Observable<ListResultResponse<ForecastCityModel>> getCitiesForecast(@Query("bbox") String bbox);
+    Observable<Response<ListResultResponse<ForecastCityModel>>> getCitiesForecast(@Query("bbox") String bbox);
 
     /**
      * getting forecast for giving city
@@ -32,5 +33,5 @@ public interface OpenweatherService {
      * @return list of forecasts for given city
      */
     @GET("forecast/daily?units=metric")
-    Observable<ListResultResponse<ForecastModel>> getForecast(@Query("id") int id, @Query("cnt") int cnt);
+    Observable<Response<ListResultResponse<ForecastModel>>> getForecast(@Query("id") int id, @Query("cnt") int cnt);
 }

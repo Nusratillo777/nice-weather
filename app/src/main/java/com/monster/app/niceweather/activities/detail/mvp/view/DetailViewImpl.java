@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
 import com.monster.app.niceweather.R;
@@ -76,5 +77,10 @@ public class DetailViewImpl extends BaseView implements DetailView{
     @Override
     public void setTitle(String title) {
         toolbar.setTitle(title);
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
     }
 }

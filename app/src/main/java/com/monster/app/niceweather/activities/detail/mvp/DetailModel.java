@@ -9,6 +9,7 @@ import com.monster.app.niceweather.models.ListResultResponse;
 import com.monster.app.niceweather.network.OpenweatherService;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
  * Created by monster on 2/26/18.
@@ -26,7 +27,7 @@ public class DetailModel {
         cityModel = (ForecastCityModel) activity.getIntent().getSerializableExtra(DetailActivity.CITY_FORECAST);
     }
 
-    public Observable<ListResultResponse<ForecastModel>> getForecast(int cityId, int count) {
+    public Observable<Response<ListResultResponse<ForecastModel>>> getForecast(int cityId, int count) {
         return service.getForecast(cityId, count);
     }
 

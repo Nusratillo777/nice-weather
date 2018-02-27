@@ -3,12 +3,15 @@ package com.monster.app.niceweather.activities.detail.mvp;
 import com.monster.app.niceweather.activities.detail.mvp.view.DetailView;
 import com.monster.app.niceweather.ext.Utils;
 import com.monster.app.niceweather.models.ForecastCityModel;
+import com.monster.app.niceweather.models.ForecastModel;
+import com.monster.app.niceweather.models.ListResultResponse;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 import static com.monster.app.niceweather.BuildConfig.GOOGLE_API_KEY;
 
@@ -45,8 +48,7 @@ public class DetailPresenter {
                 .observeOn(Schedulers.io())
                 .switchMap(city -> detailModel.getForecast(city.id, FORECAST_COUNT))
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(citiesForecast -> citiesForecast.list)
-                .subscribe(detailView::setForecastItems);
+                .subscribe(this::handleResponse, error->detailView.showError());
     }
 
 
@@ -58,8 +60,15 @@ public class DetailPresenter {
                 .switchMap(city -> detailModel.getForecast(city.id, FORECAST_COUNT))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnEach(__ -> detailView.setLoading(false))
-                .map(citiesForecast -> citiesForecast.list)
-                .subscribe(detailView::setForecastItems);
+                .subscribe(this::handleResponse, error->detailView.showError());
+    }
+
+
+    private void handleResponse(Response<ListResultResponse<ForecastModel>> response) {
+        if(response.isSuccessful())
+            detailView.setForecastItems(response.body().list);
+        else
+            detailView.showError();
     }
 
 

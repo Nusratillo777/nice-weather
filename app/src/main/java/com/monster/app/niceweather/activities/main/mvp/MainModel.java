@@ -11,6 +11,7 @@ import com.monster.app.niceweather.network.OpenweatherService;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
  * Created by monster on 2/25/18.
@@ -26,7 +27,7 @@ public class MainModel {
          this.service = service;
     }
 
-    public Observable<ListResultResponse<ForecastCityModel>> getCitiesForecast(String BBOX) {
+    public Observable<Response<ListResultResponse<ForecastCityModel>>> getCitiesForecast(String BBOX) {
         return service.getCitiesForecast(BBOX);
     }
 
