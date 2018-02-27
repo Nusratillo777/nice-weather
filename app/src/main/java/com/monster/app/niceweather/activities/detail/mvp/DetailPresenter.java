@@ -60,6 +60,7 @@ public class DetailPresenter {
                 .switchMap(city -> detailModel.getForecast(city.id, FORECAST_COUNT))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnEach(__ -> detailView.setLoading(false))
+                .retry()
                 .subscribe(this::handleResponse, error->detailView.showError());
     }
 
