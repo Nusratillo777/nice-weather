@@ -24,7 +24,7 @@ public interface OpenweatherService {
      * @return list of cities with current weather forecast
      */
     @GET("box/city")
-    Observable<Response<ListResultResponse<ForecastCityModel>>> getCitiesForecast(@Query("bbox") String bbox);
+    Observable<ListResultResponse<ForecastCityModel>> getCitiesForecast(@Query("bbox") String bbox);
 
     /**
      * getting forecast for giving city
@@ -33,5 +33,5 @@ public interface OpenweatherService {
      * @return list of forecasts for given city
      */
     @GET("forecast/daily?units=metric")
-    Observable<Response<ListResultResponse<ForecastModel>>> getForecast(@Query("id") int id, @Query("cnt") int cnt);
+    Observable<ListResultResponse<ForecastModel>> getForecast(@Query("id") int id, @Query("cnt") int cnt);
 }

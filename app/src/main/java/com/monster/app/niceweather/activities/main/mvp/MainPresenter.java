@@ -47,22 +47,24 @@ public class MainPresenter {
     private Disposable refresh() {
         return Observable.just(BBOX)
                 .observeOn(Schedulers.io())
-                .switchMap(mainModel::getCitiesForecast)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleResult, error -> mainView.showError());
+                .flatMap(bbox -> mainModel.getCitiesForecast(bbox)
+                        .map(response -> MainUiModel.stateSuccess(response.list))
+                        .onErrorReturn(t -> MainUiModel.stateError(t.getMessage()))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .startWith(MainUiModel.stateLoading()))
+                .subscribe(this::handleResult);
     }
 
     private Disposable observeRefresh() {
         return mainView.observeRefresh()
-                .doOnNext(__ -> mainView.setLoading(true))
-                .observeOn(Schedulers.io())
                 .map(__ -> BBOX)
-                .switchMap(mainModel::getCitiesForecast)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnEach(__ -> mainView.setLoading(false))
-                .retry()
-                .subscribe(this::handleResult,
-                        error -> mainView.showError());
+                .observeOn(Schedulers.io())
+                .flatMap(bbox -> mainModel.getCitiesForecast(bbox)
+                        .map(response -> MainUiModel.stateSuccess(response.list))
+                        .onErrorReturn(t -> MainUiModel.stateError(t.getMessage()))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .startWith(MainUiModel.stateLoading()))
+                .subscribe(this::handleResult);
     }
 
     public Disposable observeItemClick() {
@@ -70,11 +72,12 @@ public class MainPresenter {
                 .subscribe(mainModel::startDetailActivity);
     }
 
-    private void handleResult(Response<ListResultResponse<ForecastCityModel>> resp) {
-        if(resp.isSuccessful())
-            mainView.setForecastCityItems(resp.body().list);
-        else
-            mainView.showError();
+    private void handleResult(MainUiModel model) {
+        mainView.setLoading(model.isLoading);
+        if (model.success)
+            mainView.setForecastCityItems(model.data);
+        else if (!model.isLoading)
+            mainView.showError(model.error);
     }
 
 

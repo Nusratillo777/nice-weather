@@ -27,7 +27,7 @@ public class MainModel {
          this.service = service;
     }
 
-    public Observable<Response<ListResultResponse<ForecastCityModel>>> getCitiesForecast(String BBOX) {
+    public Observable<ListResultResponse<ForecastCityModel>> getCitiesForecast(String BBOX) {
         return service.getCitiesForecast(BBOX);
     }
 

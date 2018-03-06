@@ -27,7 +27,7 @@ public class DetailModel {
         cityModel = (ForecastCityModel) activity.getIntent().getSerializableExtra(DetailActivity.CITY_FORECAST);
     }
 
-    public Observable<Response<ListResultResponse<ForecastModel>>> getForecast(int cityId, int count) {
+    public Observable<ListResultResponse<ForecastModel>> getForecast(int cityId, int count) {
         return service.getForecast(cityId, count);
     }
 

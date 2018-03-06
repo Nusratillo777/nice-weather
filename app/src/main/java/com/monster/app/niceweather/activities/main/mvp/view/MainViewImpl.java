@@ -70,7 +70,7 @@ public class MainViewImpl extends BaseView implements MainView {
     }
 
     @Override
-    public void showError() {
-        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
+    public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 }
