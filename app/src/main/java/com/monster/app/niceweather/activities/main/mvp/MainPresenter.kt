@@ -31,6 +31,7 @@ import retrofit2.Response
 
 class MainPresenter(private val mainView: MainView, private val mainModel: MainModel) {
     private val compositeDisposable = CompositeDisposable()
+
     companion object {
         private const val BBOX = "67,39,70,42,10"
     }
@@ -42,30 +43,31 @@ class MainPresenter(private val mainView: MainView, private val mainModel: MainM
     }
 
     private val refresh = Observable.just(BBOX)
-                .observeOn(Schedulers.io())
-                .flatMap { bbox ->
-                    mainModel.getCitiesForecast(bbox)
-                            .map { response -> MainUiModel.stateSuccess(response.list) }
-                            .onErrorReturn { t -> MainUiModel.stateError(t.message) }
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .startWith(MainUiModel.stateLoading())
-                }
-                .subscribe{ handleResult(it) }
+            .observeOn(Schedulers.io())
+            .flatMap { bbox ->
+                mainModel.getCitiesForecast(bbox)
+                        .map { response -> MainUiModel.stateSuccess(response.list) }
+                        .onErrorReturn { t -> MainUiModel.stateError(t.message) }
+
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .startWith(MainUiModel.stateLoading())
+            .subscribe { handleResult(it) }
 
     private val observeRefresh = mainView.observeRefresh
-                .map { _ -> BBOX }
-                .observeOn(Schedulers.io())
-                .flatMap { bbox ->
-                    mainModel.getCitiesForecast(bbox)
-                            .map { response -> MainUiModel.stateSuccess(response.list) }
-                            .onErrorReturn { t -> MainUiModel.stateError(t.message) }
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .startWith(MainUiModel.stateLoading())
-                }
-                .subscribe{ handleResult(it) }
+            .map { _ -> BBOX }
+            .observeOn(Schedulers.io())
+            .flatMap { bbox ->
+                mainModel.getCitiesForecast(bbox)
+                        .map { response -> MainUiModel.stateSuccess(response.list) }
+                        .onErrorReturn { t -> MainUiModel.stateError(t.message) }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .startWith(MainUiModel.stateLoading())
+            .subscribe { handleResult(it) }
 
     private val observeItemClick = mainView.observeItemClick
-                .subscribe{ mainModel.startDetailActivity(it) }
+            .subscribe { mainModel.startDetailActivity(it) }
 
     private fun handleResult(model: MainUiModel) {
         mainView.setLoading(model.isLoading)

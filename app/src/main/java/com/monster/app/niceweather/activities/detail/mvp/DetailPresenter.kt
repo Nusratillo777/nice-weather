@@ -33,9 +33,10 @@ class DetailPresenter(private val detailView: DetailView, private val detailMode
                 detailModel.getForecast(city.id, FORECAST_COUNT)
                         .map { response -> DetailUiModel.stateSuccess(response.list, detailModel.forecastCity) }
                         .onErrorReturn { t -> DetailUiModel.stateError(t.message) }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(DetailUiModel.stateLoading)
+
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .startWith(DetailUiModel.stateLoading)
             .subscribe { this.handleResponse(it) }
 
 
@@ -46,9 +47,9 @@ class DetailPresenter(private val detailView: DetailView, private val detailMode
                 detailModel.getForecast(city.id, FORECAST_COUNT)
                         .map { response -> DetailUiModel.stateSuccess(response.list, detailModel.forecastCity) }
                         .onErrorReturn { t -> DetailUiModel.stateError(t.message) }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(DetailUiModel.stateLoading)
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .startWith(DetailUiModel.stateLoading)
             .subscribe { this.handleResponse(it) }
 
 
