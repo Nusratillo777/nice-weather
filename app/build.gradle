@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
@@ -36,6 +39,7 @@ dependencies {
     //dagger
     implementation "com.google.dagger:dagger:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
 
 
     //network
@@ -46,10 +50,6 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okHttp"
     implementation "com.squareup.picasso:picasso:$picasso"
     implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0"
-
-    //butterknife
-    implementation "com.jakewharton:butterknife:$butterknife"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
 
     //rxjava
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
@@ -63,4 +63,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:support-v4:27.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}
+kapt {
+    generateStubs = true
 }
