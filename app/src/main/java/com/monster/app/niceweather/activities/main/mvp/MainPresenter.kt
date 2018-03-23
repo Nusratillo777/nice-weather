@@ -31,7 +31,9 @@ import retrofit2.Response
 
 class MainPresenter(private val mainView: MainView, private val mainModel: MainModel) {
     private val compositeDisposable = CompositeDisposable()
-    private val BBOX = "67,39,70,42,10"
+    companion object {
+        private const val BBOX = "67,39,70,42,10"
+    }
 
     fun onCreate() {
         compositeDisposable.add(refresh)
@@ -48,7 +50,7 @@ class MainPresenter(private val mainView: MainView, private val mainModel: MainM
                             .observeOn(AndroidSchedulers.mainThread())
                             .startWith(MainUiModel.stateLoading())
                 }
-                .subscribe{ this.handleResult(it) }
+                .subscribe{ handleResult(it) }
 
     private val observeRefresh = mainView.observeRefresh
                 .map { _ -> BBOX }
@@ -60,7 +62,7 @@ class MainPresenter(private val mainView: MainView, private val mainModel: MainM
                             .observeOn(AndroidSchedulers.mainThread())
                             .startWith(MainUiModel.stateLoading())
                 }
-                .subscribe{ this.handleResult(it) }
+                .subscribe{ handleResult(it) }
 
     private val observeItemClick = mainView.observeItemClick
                 .subscribe{ mainModel.startDetailActivity(it) }
