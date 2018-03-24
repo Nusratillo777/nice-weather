@@ -44,9 +44,9 @@ public class DetailPresenter {
                 .observeOn(Schedulers.io())
                 .flatMap(city -> detailModel.getForecast(city.id, FORECAST_COUNT)
                         .map(response -> DetailUiModel.stateSuccess(response.list, detailModel.getForecastCity()))
-                        .onErrorReturn(t -> DetailUiModel.stateError(t.getMessage()))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(DetailUiModel.stateLoading()))
+                        .onErrorReturn(t -> DetailUiModel.stateError(t.getMessage())))
+                .observeOn(AndroidSchedulers.mainThread())
+                .startWith(DetailUiModel.stateLoading())
                 .subscribe(this::handleResponse);
     }
 
@@ -57,9 +57,9 @@ public class DetailPresenter {
                 .map(__ -> detailModel.getForecastCity())
                 .flatMap(city -> detailModel.getForecast(city.id, FORECAST_COUNT)
                         .map(response -> DetailUiModel.stateSuccess(response.list, detailModel.getForecastCity()))
-                        .onErrorReturn(t -> DetailUiModel.stateError(t.getMessage()))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(DetailUiModel.stateLoading()))
+                        .onErrorReturn(t -> DetailUiModel.stateError(t.getMessage())))
+                .observeOn(AndroidSchedulers.mainThread())
+                .startWith(DetailUiModel.stateLoading())
                 .subscribe(this::handleResponse);
     }
 

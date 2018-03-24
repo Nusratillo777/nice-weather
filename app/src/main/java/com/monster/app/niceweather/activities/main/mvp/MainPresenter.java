@@ -49,9 +49,9 @@ public class MainPresenter {
                 .observeOn(Schedulers.io())
                 .flatMap(bbox -> mainModel.getCitiesForecast(bbox)
                         .map(response -> MainUiModel.stateSuccess(response.list))
-                        .onErrorReturn(t -> MainUiModel.stateError(t.getMessage()))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(MainUiModel.stateLoading()))
+                        .onErrorReturn(t -> MainUiModel.stateError(t.getMessage())))
+                .observeOn(AndroidSchedulers.mainThread())
+                .startWith(MainUiModel.stateLoading())
                 .subscribe(this::handleResult);
     }
 
@@ -61,9 +61,9 @@ public class MainPresenter {
                 .observeOn(Schedulers.io())
                 .flatMap(bbox -> mainModel.getCitiesForecast(bbox)
                         .map(response -> MainUiModel.stateSuccess(response.list))
-                        .onErrorReturn(t -> MainUiModel.stateError(t.getMessage()))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .startWith(MainUiModel.stateLoading()))
+                        .onErrorReturn(t -> MainUiModel.stateError(t.getMessage())))
+                .observeOn(AndroidSchedulers.mainThread())
+                .startWith(MainUiModel.stateLoading())
                 .subscribe(this::handleResult);
     }
 
