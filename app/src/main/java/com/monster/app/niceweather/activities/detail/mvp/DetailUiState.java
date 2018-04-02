@@ -1,6 +1,5 @@
 package com.monster.app.niceweather.activities.detail.mvp;
 
-import com.monster.app.niceweather.activities.main.mvp.MainUiModel;
 import com.monster.app.niceweather.models.ForecastCityModel;
 import com.monster.app.niceweather.models.ForecastModel;
 
@@ -10,14 +9,14 @@ import java.util.List;
  * Created by monster on 3/5/18.
  */
 
-public class DetailUiModel {
+public class DetailUiState {
     public ForecastCityModel city;
     public List<ForecastModel> data;
     public boolean isLoading;
     public boolean success;
     public String error;
 
-    public DetailUiModel(List<ForecastModel> data, ForecastCityModel city) {
+    public DetailUiState(List<ForecastModel> data, ForecastCityModel city) {
         this.data = data;
         this.success = true;
         this.isLoading = false;
@@ -25,7 +24,7 @@ public class DetailUiModel {
         this.city = city;
     }
 
-    public DetailUiModel(boolean isLoading) {
+    public DetailUiState(boolean isLoading) {
         this.data = null;
         this.success = false;
         this.isLoading = isLoading;
@@ -33,7 +32,7 @@ public class DetailUiModel {
         this.city = null;
     }
 
-    public DetailUiModel(String error) {
+    public DetailUiState(String error) {
         this.error = error;
         this.success = false;
         this.isLoading = false;
@@ -41,15 +40,15 @@ public class DetailUiModel {
         this.city = null;
     }
 
-    public static DetailUiModel stateLoading() {
-        return new DetailUiModel(true);
+    public static DetailUiState stateLoading() {
+        return new DetailUiState(true);
     }
 
-    public static DetailUiModel stateError(String message) {
-        return new DetailUiModel(message);
+    public static DetailUiState stateError(String message) {
+        return new DetailUiState(message);
     }
 
-    public static DetailUiModel stateSuccess(List<ForecastModel> data, ForecastCityModel city) {
-        return new DetailUiModel(data, city);
+    public static DetailUiState stateSuccess(List<ForecastModel> data, ForecastCityModel city) {
+        return new DetailUiState(data, city);
     }
 }

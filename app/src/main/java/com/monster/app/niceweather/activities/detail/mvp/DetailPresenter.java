@@ -43,10 +43,10 @@ public class DetailPresenter {
         return Observable.just(detailModel.getForecastCity())
                 .observeOn(Schedulers.io())
                 .flatMap(city -> detailModel.getForecast(city.id, FORECAST_COUNT)
-                        .map(response -> DetailUiModel.stateSuccess(response.list, detailModel.getForecastCity()))
-                        .onErrorReturn(t -> DetailUiModel.stateError(t.getMessage())))
+                        .map(response -> DetailUiState.stateSuccess(response.list, detailModel.getForecastCity()))
+                        .onErrorReturn(t -> DetailUiState.stateError(t.getMessage())))
                 .observeOn(AndroidSchedulers.mainThread())
-                .startWith(DetailUiModel.stateLoading())
+                .startWith(DetailUiState.stateLoading())
                 .subscribe(this::handleResponse);
     }
 
@@ -56,15 +56,15 @@ public class DetailPresenter {
                 .observeOn(Schedulers.io())
                 .map(__ -> detailModel.getForecastCity())
                 .flatMap(city -> detailModel.getForecast(city.id, FORECAST_COUNT)
-                        .map(response -> DetailUiModel.stateSuccess(response.list, detailModel.getForecastCity()))
-                        .onErrorReturn(t -> DetailUiModel.stateError(t.getMessage())))
+                        .map(response -> DetailUiState.stateSuccess(response.list, detailModel.getForecastCity()))
+                        .onErrorReturn(t -> DetailUiState.stateError(t.getMessage())))
                 .observeOn(AndroidSchedulers.mainThread())
-                .startWith(DetailUiModel.stateLoading())
+                .startWith(DetailUiState.stateLoading())
                 .subscribe(this::handleResponse);
     }
 
 
-    private void handleResponse(DetailUiModel model) {
+    private void handleResponse(DetailUiState model) {
         detailView.setLoading(model.isLoading);
         if (model.success)
             detailView.setForecastItems(model.data);
